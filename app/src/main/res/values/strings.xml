@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SharedPreferencesSimpleProject</string>
+    <!-- key for store username and password using Shared Preferences   -->
+    <string name="username_key">username_key</string>
+    <string name="password_key">password_key</string>
 </resources>
