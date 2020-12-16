@@ -1,9 +1,8 @@
 package com.purwadhika.sharedpreferencessimpleproject
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.purwadhika.sharedpreferencessimpleproject.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,27 +16,11 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.registerButton.setOnClickListener {
             if (isValidInput()){
-                saveUsernameData(binding.inputUsername.text.toString())
-                savePasswordData(binding.inputPassword.text.toString())
+                SharedPreferenceUtils.storeUsername(this, binding.inputUsername.text.toString())
+                SharedPreferenceUtils.storePassword(this, binding.inputPassword.text.toString())
                 finish()
                 Toast.makeText(this@RegisterActivity, "Register berhasil", Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun saveUsernameData(username :String){
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        with(sharedPref.edit()){
-            putString(getString(R.string.username_key), username)
-            apply()
-        }
-    }
-
-    private fun savePasswordData(password :String){
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        with(sharedPref.edit()){
-            putString(getString(R.string.password_key), password)
-            apply()
         }
     }
 

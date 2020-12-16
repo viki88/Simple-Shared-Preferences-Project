@@ -1,10 +1,9 @@
 package com.purwadhika.sharedpreferencessimpleproject
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.purwadhika.sharedpreferencessimpleproject.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -18,8 +17,8 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             if (isValidInput()){
-                if (binding.inputPassword.text.toString() == getSavedPassword() &&
-                        binding.inputUsername.text.toString() == getSavedUsername()){
+                if (binding.inputPassword.text.toString() == SharedPreferenceUtils.getStoredPassword(this) &&
+                        binding.inputUsername.text.toString() == SharedPreferenceUtils.getStoredUsername(this)){
                     goToMainActivity()
                 }else{
                     Toast.makeText(this, "Kombinasi Username dan Password salah silahkan ulangi lagi.", Toast.LENGTH_SHORT).show()
@@ -30,23 +29,15 @@ class LoginActivity : AppCompatActivity() {
         binding.signupButton.setOnClickListener { goToRegisterActivity() }
 
         // check if any username is saved go to main activity
-        if (!getSavedUsername().isNullOrEmpty()) goToMainActivity()
+        if (!SharedPreferenceUtils.getStoredUsername(this).isNullOrEmpty()) goToMainActivity()
     }
 
-    private fun goToMainActivity() = startActivity(Intent(this, MainActivity::class.java))
+    private fun goToMainActivity(){
+        finish()
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
     private fun goToRegisterActivity() = startActivity(Intent(this, RegisterActivity::class.java))
-
-
-    private fun getSavedUsername() :String?{
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        return sharedPref.getString(getString(R.string.username_key), "")
-    }
-
-    private fun getSavedPassword() :String?{
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        return sharedPref.getString(getString(R.string.password_key), "")
-    }
-
 
     private fun isValidInput() :Boolean{
         return when{
